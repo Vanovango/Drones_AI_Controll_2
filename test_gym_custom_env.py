@@ -15,7 +15,6 @@ from stable_baselines3 import PPO
 import os
 
 
-
 class Game:
     """
     This class responsible for all events in the game
@@ -46,13 +45,13 @@ class Game:
         rect_w = 30
         rect_h = 30
 
-        pg.draw.rect(self.window, (0, 255, 0), (100, 100, rect_w, rect_h))  # x, y, w, h
-        pg.draw.rect(self.window, (0, 255, 0), (600, 600, rect_w, rect_h))
-        pg.draw.rect(self.window, (0, 255, 0), (600, 100, rect_w, rect_h))
-        pg.draw.rect(self.window, (0, 255, 0), (100, 600, rect_w, rect_h))
-        pg.draw.rect(self.window, (0, 255, 0), (1200, 300, rect_w, rect_h))
-        pg.draw.rect(self.window, (0, 255, 0), (900, 150, rect_w, rect_h))
-        pg.draw.rect(self.window, (0, 255, 0), (800, 400, rect_w, rect_h))
+        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (100, 100))
+        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (600, 600))
+        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (600, 100))
+        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (100, 600))
+        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (1200, 300))
+        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (900, 150))
+        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (800, 400))
 
         # draw drone and circle around it
         self.window.blit(self.drone, self.drone_rect)
@@ -238,4 +237,4 @@ if __name__ == "__main__":
     while True:
         iters += 1
         model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name=f"PPO")
-        model.save(f"{save_path}/{TIMESTEPS * iters}_iterations")
+        model.save(f"{save_path}/{iters}_epoch")
