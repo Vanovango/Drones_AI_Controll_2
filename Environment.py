@@ -32,18 +32,18 @@ class Environment:
         self.clock = pg.time.Clock()
 
         # create master and slave objects (dict)
-        for i in range(self.n_drones + 1):
+        for i in range(self.n_drones):
             if i == 0:
-                self.all_drones = {i: pg.image.load('./images/MASTER_drone.png')}
+                self.all_drones[i] = pg.image.load('./images/MASTER_drone.png')
             else:
-                self.all_drones = {i: pg.image.load('./images/SLAVE_drone.png')}
+                self.all_drones[i] = pg.image.load('./images/SLAVE_drone.png')
 
         # create rects of all drones (dict)
-        for i in range(self.n_drones + 1):
+        for i in range(self.n_drones):
             if i == 0:
-                self.drones_rect = {i: self.all_drones[i].get_rect(centerx=self.WIDTH // 2, centery=self.HIGH // 2)}
+                self.drones_rect[i] = self.all_drones[i].get_rect(centerx=self.WIDTH // 2, centery=self.HIGH // 2)
             else:
-                self.drones_rect = {i: self.all_drones[i].get_rect(centerx=self.WIDTH // 2, centery=self.HIGH // 2)}
+                self.drones_rect[i] = self.all_drones[i].get_rect(centerx=self.WIDTH // 2, centery=self.HIGH // 2)
 
         # save all drones positions (list)
         self.drones_coordinates = [[self.drones_rect[i].centerx, self.drones_rect[i].centery] for i in self.drones_rect]
@@ -56,9 +56,9 @@ class Environment:
         self.window.fill(pg.Color('black'))
 
         # draw all drones and circle around they
-        for drone, rect in self.all_drones.values(), self.drones_rect.values():
-            self.window.blit(drone, rect)
-            pg.draw.circle(self.window, pg.Color('blue'), rect.center, self.retransmission_radius, 2)
+        for index in range(self.n_drones):
+            self.window.blit(self.all_drones[index], self.drones_rect[index])
+            pg.draw.circle(self.window, pg.Color('blue'), self.drones_rect[index].center, self.retransmission_radius, 2)
 
         pg.display.update()
         self.clock.tick(self.FPS)

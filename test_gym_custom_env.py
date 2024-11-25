@@ -172,8 +172,6 @@ class DroneEnv(gym.Env):
             cut_obs.append(x)
             cut_obs.append(y)
 
-
-
         observation = cut_obs + list(self.prev_actions)
         observation = np.array(observation)
 

@@ -11,12 +11,12 @@ import cv2
 import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
+
 from Environment import Environment
 
-
-HISTORY_LEN = 30
 TOTAL_ACTIONS = 30
 N_DISCRETE_ACTIONS = 5
+HISTORY_LEN = 30 * N_DISCRETE_ACTIONS
 N_DRONES = 6
 
 
@@ -35,19 +35,29 @@ class Model(gym.Env):
         self.speed = 15
         self.action_number = 0
 
+        # possible reward changes
+        self.change_reward = {
+            0: -5,
+            1: -3,
+            2: 3,
+            3: 5,
+            4: 7,
+            5: -5,
+            6: -5
+        }
+
         # Define action and observation space
         # They must be gym.spaces objects
         # Example when using discrete actions:
-        self.action_space = spaces.Discrete(N_DISCRETE_ACTIONS)
+        self.action_space = spaces.MultiDiscrete([N_DISCRETE_ACTIONS] * N_DRONES)
         # Example for using image as input (channel-first; channel-last also works):
         # (7 + test_time) == observation -> int
         self.observation_space = spaces.Box(low=-1, high=1280,
-                                            shape=(len(self.window.drones_coordinates) * 2 + HISTORY_LEN,),
+                                            shape=(N_DRONES * 2 + HISTORY_LEN,),
                                             dtype=np.int32)
 
-    # TODO do action for all drone using 'for'. maybe i should invent drone_id to track who is doing the action
-    def step(self, action):
-        self.actions_history.append(action)  # add action to history (0, 1, 2, 3)
+    def step(self, actions):
+        self.actions_history.append(action for action in actions)  # add action to history (0, 1, 2, 3, 5)
         self.action_number += 1
         self.window.draw_all()  # draw objects on window
 
@@ -61,48 +71,56 @@ class Model(gym.Env):
                 continue
 
         # Change the drone position based on the action
-        # 0 - up, 1 - down, 2 - left, 3 - right, 4 - stay
-        if action == 0:
-            self.window.drones_rect.move_ip(0, -self.speed)
-        elif action == 1:
-            self.window.drones_rect.move_ip(0, +self.speed)
-        elif action == 2:
-            self.window.drones_rect.move_ip(-self.speed, 0)
-        elif action == 3:
-            self.window.drones_rect.move_ip(+self.speed, 0)
-        elif action == 4:
-            self.window.drones_rect.move_ip(0, 0)
+        # and save it on rect and coordinates
+        for index in range(N_DRONES):
+            # 0 - up, 1 - down, 2 - left, 3 - right, 4 - stay
+            if actions[index] == 0:
+                # go up
+                self.window.drones_rect[index].move_ip(0, -self.speed)
+                self.window.drones_coordinates[index] = \
+                    [self.window.drones_coordinates[index][0], self.window.drones_coordinates[index][1] - self.speed]
+            elif actions[index] == 1:
+                # go down
+                self.window.drones_rect[index].move_ip(0, +self.speed)
+                self.window.drones_coordinates[index] = \
+                    [self.window.drones_coordinates[index][0], self.window.drones_coordinates[index][1] + self.speed]
+            elif actions[index] == 2:
+                # go left
+                self.window.drones_rect[index].move_ip(-self.speed, 0)
+                self.window.drones_coordinates[index] = \
+                    [self.window.drones_coordinates[index][0] - self.speed, self.window.drones_coordinates[index][1]]
+            elif actions[index] == 3:
+                # go right
+                self.window.drones_rect[index].move_ip(+self.speed, 0)
+                self.window.drones_coordinates[index] = \
+                    [self.window.drones_coordinates[index][0] + self.speed, self.window.drones_coordinates[index][1]]
+            elif actions[index] == 4:
+                # nothing to do
+                pass
 
-        # calculate reward
-        drone_x = self.window.drones_rect.centerx
-        drone_y = self.window.drones_rect.centery
+        # calculate overall reward
+        for index in range(N_DRONES):
+            drone_x = self.window.drones_rect[index].centerx
+            drone_y = self.window.drones_rect[index].centery
 
-        connections = 0
-        for x, y in self.window.drones_coordinates:
-            if (abs(x - drone_x) ** 2 + abs(y - drone_y) ** 2) ** 0.5 <= 200:
-                connections += 1
-        change_reward = {
-            0: -5,
-            1: -3,
-            2: 3,
-            3: 5,
-            4: 7,
-            5: -5,
-            6: -5
-        }
-        self.reward += change_reward[connections]
+            connections = -1    # because this variable calculate himself at once
+            for x, y in self.window.drones_coordinates:
+                if (abs(x - drone_x) ** 2 + abs(y - drone_y) ** 2) ** 0.5 <= 200:
+                    connections += 1
 
+            self.reward += self.change_reward[connections]
+
+        # tracks the end of an episode
         if self.action_number == TOTAL_ACTIONS:
             self.done = True
-            # test_prints(reward=self.reward)
 
         # update observation
-        cut_obs = [drone_x, drone_y]
+        coordinates_list = []
         for x, y in self.window.drones_coordinates:
-            cut_obs.append(x)
-            cut_obs.append(y)
+            coordinates_list.append(x)
+            coordinates_list.append(y)
 
-        observation = cut_obs + list(self.actions_history)
+        observation = coordinates_list + list(self.actions_history)
         observation = np.array(observation)
 
         terminated = self.done
