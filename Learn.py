@@ -7,6 +7,8 @@ from stable_baselines3 import A2C
 
 from Model import Model
 
+from time import time
+
 
 if __name__ == "__main__":
     save_path = './models/models'
@@ -18,11 +20,16 @@ if __name__ == "__main__":
     env = Model()
     env.reset()
 
-    model = A2C('MlpPolicy', env, device='cuda')
+    model = A2C('MlpPolicy', env, verbose=1)
 
     steps_to_save = 10000
     iters = 0
     while True:
         iters += 1
-        model.learn(total_timesteps=steps_to_save, reset_num_timesteps=False, tb_log_name=f"A2C")
+        start = time()
+        model.learn(total_timesteps=steps_to_save)  # , reset_num_timesteps=False, tb_log_name=f"A2C"
         model.save(f"{save_path}/{iters}_epoch")
+        print("______________________________________________")
+        print("epoch goes")
+        print(f"time to lear on one epoch: {time() - start}")
+        print()

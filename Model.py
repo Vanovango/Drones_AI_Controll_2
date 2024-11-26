@@ -48,20 +48,19 @@ class Model(gym.Env):
 
         # Define action and observation space
         # They must be gym.spaces objects
-        # Example when using discrete actions:
         self.action_space = spaces.MultiDiscrete([N_DISCRETE_ACTIONS] * N_DRONES)
         # Example for using image as input (channel-first; channel-last also works):
-        # (7 + test_time) == observation -> int
         self.observation_space = spaces.Box(low=-1, high=1280,
                                             shape=(N_DRONES * 2 + HISTORY_LEN,),
                                             dtype=np.int32)
 
     def step(self, actions):
-        self.actions_history.append(action for action in actions)  # add action to history (0, 1, 2, 3, 5)
+        self.actions_history += list(action for action in actions)  # add action to history (0, 1, 2, 3, 5)
         self.action_number += 1
-        self.window.draw_all()  # draw objects on window
+        self.window.draw_all()  # draw objects on window (vizual learning proces)
 
         # Takes step after fixed time
+        # need to vizual
         t_end = time.time() + 0.05
         k = -1
         while time.time() < t_end:
@@ -96,7 +95,7 @@ class Model(gym.Env):
                     [self.window.drones_coordinates[index][0] + self.speed, self.window.drones_coordinates[index][1]]
             elif actions[index] == 4:
                 # nothing to do
-                pass
+                self.window.drones_rect[index].move_ip(0, 0)
 
         # calculate overall reward
         for index in range(N_DRONES):
@@ -113,6 +112,7 @@ class Model(gym.Env):
         # tracks the end of an episode
         if self.action_number == TOTAL_ACTIONS:
             self.done = True
+            # print(f"total reward = {self.reward}")
 
         # update observation
         coordinates_list = []

@@ -46,7 +46,8 @@ class Environment:
                 self.drones_rect[i] = self.all_drones[i].get_rect(centerx=self.WIDTH // 2, centery=self.HIGH // 2)
 
         # save all drones positions (list)
-        self.drones_coordinates = [[self.drones_rect[i].centerx, self.drones_rect[i].centery] for i in self.drones_rect]
+        self.drones_coordinates = list([self.drones_rect[i].centerx, self.drones_rect[i].centery]
+                                       for i in self.drones_rect)
 
     def draw_all(self):
         """
