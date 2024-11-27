@@ -11,8 +11,7 @@ from time import time
 
 
 if __name__ == "__main__":
-    save_path = './models/models'
-    # log_dir = './models/log'      verbose=1, tensorboard_log=log_dir,
+    save_path = './models'
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -27,9 +26,5 @@ if __name__ == "__main__":
     while True:
         iters += 1
         start = time()
-        model.learn(total_timesteps=steps_to_save)  # , reset_num_timesteps=False, tb_log_name=f"A2C"
+        model.learn(total_timesteps=steps_to_save)
         model.save(f"{save_path}/{iters}_epoch")
-        print("______________________________________________")
-        print("epoch goes")
-        print(f"time to lear on one epoch: {time() - start}")
-        print()

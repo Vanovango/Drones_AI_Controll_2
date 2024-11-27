@@ -104,9 +104,11 @@ class Model(gym.Env):
 
             connections = -1    # because this variable calculate himself at once
             for x, y in self.window.drones_coordinates:
-                if (abs(x - drone_x) ** 2 + abs(y - drone_y) ** 2) ** 0.5 <= 200:
+                distance = (abs(x - drone_x) ** 2 + abs(y - drone_y) ** 2) ** 0.5
+                if self.window.retransmission_radius - 50 <= distance <= self.window.retransmission_radius:
                     connections += 1
-
+            if connections == -1:
+                connections = 0
             self.reward += self.change_reward[connections]
 
         # tracks the end of an episode
@@ -159,3 +161,6 @@ class Model(gym.Env):
         info = {}
 
         return observation, info
+
+    # def close(self):
+    #     self.window.

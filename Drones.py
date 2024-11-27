@@ -41,7 +41,7 @@ class Master(Drone):
 
     def __init__(self):
         super().__init__()
-        self.icon = pg.image.load('./images/MASTER_drone.png')
+        self.icon = pg.image.load('images/MASTER_drone.png')
         # generate master position on center of game window
 
         self.DRONES['master'] = {

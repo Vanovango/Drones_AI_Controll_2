@@ -31,7 +31,7 @@ class Game:
         self.window = pg.display.set_mode((self.WIDTH, self.HIGH))
         self.clock = pg.time.Clock()
 
-        self.drone = pg.image.load('./images/MASTER_drone.png')
+        self.drone = pg.image.load('../images/MASTER_drone.png')
         self.drone_rect = self.drone.get_rect(centerx=640, centery=360)
 
     def draw_all(self):
@@ -45,13 +45,13 @@ class Game:
         rect_w = 30
         rect_h = 30
 
-        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (100, 100))
-        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (600, 600))
-        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (600, 100))
-        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (100, 600))
-        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (1200, 300))
-        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (900, 150))
-        self.window.blit(pg.image.load('./images/SLAVE_drone.png'), (800, 400))
+        self.window.blit(pg.image.load('../images/SLAVE_drone.png'), (100, 100))
+        self.window.blit(pg.image.load('../images/SLAVE_drone.png'), (600, 600))
+        self.window.blit(pg.image.load('../images/SLAVE_drone.png'), (600, 100))
+        self.window.blit(pg.image.load('../images/SLAVE_drone.png'), (100, 600))
+        self.window.blit(pg.image.load('../images/SLAVE_drone.png'), (1200, 300))
+        self.window.blit(pg.image.load('../images/SLAVE_drone.png'), (900, 150))
+        self.window.blit(pg.image.load('../images/SLAVE_drone.png'), (800, 400))
 
         # draw drone and circle around it
         self.window.blit(self.drone, self.drone_rect)
@@ -219,7 +219,7 @@ class DroneEnv(gym.Env):
 
 
 if __name__ == "__main__":
-    save_path = './models/models'
+    save_path = '../models/models'
     log_dir = './models/log'
 
     if not os.path.exists(save_path):

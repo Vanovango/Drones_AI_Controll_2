@@ -20,7 +20,7 @@ class Environment:
         self.WIDTH = 1280
         self.HIGH = 720
         self.FPS = 60
-        self.retransmission_radius = 200
+        self.retransmission_radius = 150
 
         # drones parameters
         self.n_drones = n_drones
@@ -34,9 +34,9 @@ class Environment:
         # create master and slave objects (dict)
         for i in range(self.n_drones):
             if i == 0:
-                self.all_drones[i] = pg.image.load('./images/MASTER_drone.png')
+                self.all_drones[i] = pg.image.load('C:/Code/pythonProjects/Drones_AI_Controll_2/images/MASTER_drone.png')
             else:
-                self.all_drones[i] = pg.image.load('./images/SLAVE_drone.png')
+                self.all_drones[i] = pg.image.load('C:/Code/pythonProjects/Drones_AI_Controll_2/images/SLAVE_drone.png')
 
         # create rects of all drones (dict)
         for i in range(self.n_drones):
