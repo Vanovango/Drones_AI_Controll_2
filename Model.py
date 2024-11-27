@@ -1,7 +1,6 @@
 """
 Инициализация модели нейронной сети, выбор действия по входным данным
 
-Пока что очень много непонятого, нужно продолжать рыться в интернете
 """
 
 import time
@@ -24,15 +23,15 @@ class Model(gym.Env):
     """Custom Environment that follows gym interface."""
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self):
+    def __init__(self, n_drones=N_DRONES, speed=15):
         super(Model, self).__init__()
 
         # Initial main parameters
         self.actions_history = None
         self.reward = None
         self.done = False
-        self.window = Environment(N_DRONES)
-        self.speed = 15
+        self.window = Environment(n_drones)
+        self.speed = speed
         self.action_number = 0
 
         # possible reward changes

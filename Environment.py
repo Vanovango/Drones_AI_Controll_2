@@ -1,6 +1,6 @@
 """
 Файл описывающий окружение для нейронной сети, он является хранилищем данных
-Никаких действий не выполняет
+Никаких действий не выполняет, занимается рисованием объектов
 """
 import pygame as pg
 
@@ -10,7 +10,7 @@ class Environment:
     This class responsible for all events in the game
     """
 
-    def __init__(self, n_drones: int):
+    def __init__(self, n_drones: int, retransmission_radius=150):
         """
         initial all needed parameters.
         Main task is create list of drones coordinates [[x_1, y_1], [x_2, y_2], ... [x_n, y_n]]
@@ -20,7 +20,7 @@ class Environment:
         self.WIDTH = 1280
         self.HIGH = 720
         self.FPS = 60
-        self.retransmission_radius = 150
+        self.retransmission_radius = retransmission_radius
 
         # drones parameters
         self.n_drones = n_drones
@@ -34,9 +34,9 @@ class Environment:
         # create master and slave objects (dict)
         for i in range(self.n_drones):
             if i == 0:
-                self.all_drones[i] = pg.image.load('C:/Code/pythonProjects/Drones_AI_Controll_2/images/MASTER_drone.png')
+                self.all_drones[i] = pg.image.load('./images/MASTER_drone.png')
             else:
-                self.all_drones[i] = pg.image.load('C:/Code/pythonProjects/Drones_AI_Controll_2/images/SLAVE_drone.png')
+                self.all_drones[i] = pg.image.load('./images/SLAVE_drone.png')
 
         # create rects of all drones (dict)
         for i in range(self.n_drones):
