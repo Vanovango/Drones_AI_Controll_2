@@ -51,8 +51,11 @@ def start_demonstration():
     pg.quit()
     pg.display.quit()
     # show MainWindow again
-    if SettingsWindow.isVisible():
-        SettingsWindow.close()
+    try:
+        if SettingsWindow.isVisible():
+            SettingsWindow.close()
+    except:
+        pass
 
     MainWindow.show()
 
