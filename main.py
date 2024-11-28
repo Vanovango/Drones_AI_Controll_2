@@ -13,24 +13,13 @@ from MainWindow import UiMainWindow
 from Model import Model
 from SettingsWindow import UiSettingsWindow
 
-
-def open_main_window():
-    global MainWindow
-    MainWindow = QtWidgets.QMainWindow()
-    class_main = UiMainWindow()
-    class_main.setupUi(MainWindow)
-
-    MainWindow.show()
-
-    class_main.button_start_demonstration.clicked.connect(start_demonstration)
-    class_main.button_model_settings.clicked.connect(go_to_settings)
+MODEL_SETTINGS = {'n_drones': 6,
+                  'speed': 15,
+                  'retransmission_radius': 150}
 
 
-def start_demonstration():
+def demonstration(env):
     load_model_path = './models/1_epoch.zip'
-
-    env = Model()
-    env.reset()
 
     model = A2C('MlpPolicy', env, verbose=1)
     model.load(path=load_model_path)
@@ -47,35 +36,61 @@ def start_demonstration():
                     done = True
             elif event.type == pg.QUIT:
                 done = True
-    # close Pygame window
-    pg.quit()
-    pg.display.quit()
-    # show MainWindow again
-    try:
-        if SettingsWindow.isVisible():
-            SettingsWindow.close()
-    except:
-        pass
+
+
+def open_main_window():
+    global MainWindow
+    MainWindow = QtWidgets.QMainWindow()
+    class_main = UiMainWindow()
+    class_main.setupUi(MainWindow)
 
     MainWindow.show()
 
+    def start_demonstration_from_main():
+        env = Model()
+        env.reset()
 
-def back_to_main():
-    SettingsWindow.close()
-    open_main_window()
+        demonstration(env)
 
+        # close Pygame window
+        pg.quit()
+        pg.display.quit()
+        # show MainWindow again
+        MainWindow.show()
 
-def go_to_settings():
-    global SettingsWindow
-    SettingsWindow = QtWidgets.QMainWindow()
-    class_settings = UiSettingsWindow()
-    class_settings.setupUi(SettingsWindow)
+    def open_settings_window():
+        global SettingsWindow
+        SettingsWindow = QtWidgets.QMainWindow()
+        class_settings = UiSettingsWindow()
+        class_settings.setupUi(SettingsWindow)
 
-    SettingsWindow.show()
-    MainWindow.close()
+        SettingsWindow.show()
+        MainWindow.close()
 
-    class_settings.button_start_demonstration.clicked.connect(start_demonstration)
-    class_settings.button_back.clicked.connect(back_to_main)
+        def start_demonstration_from_settings():
+            env = Model(n_drones=int(class_settings.lineEdit_n_drones.text()),
+                        speed=int(class_settings.lineEdit_drone_speed.text()),
+                        retransmission_radius=int(class_settings.lineEdit_retransmission_radius.text()))
+            env.reset()
+
+            demonstration(env)
+
+            # close Pygame window
+            pg.quit()
+            pg.display.quit()
+            # show MainWindow again
+            SettingsWindow.close()
+            MainWindow.show()
+
+        def back_to_main():
+            SettingsWindow.close()
+            open_main_window()
+
+        class_settings.button_start_demonstration.clicked.connect(start_demonstration_from_settings)
+        class_settings.button_back.clicked.connect(back_to_main)
+
+    class_main.button_start_demonstration.clicked.connect(start_demonstration_from_main)
+    class_main.button_model_settings.clicked.connect(open_settings_window)
 
 
 if __name__ == "__main__":

@@ -16,22 +16,22 @@ from Environment import Environment
 TOTAL_ACTIONS = 30
 N_DISCRETE_ACTIONS = 5
 HISTORY_LEN = 30 * N_DISCRETE_ACTIONS
-N_DRONES = 6
 
 
 class Model(gym.Env):
     """Custom Environment that follows gym interface."""
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, n_drones=N_DRONES, speed=15):
-        super(Model, self).__init__()
-
+    def __init__(self, n_drones=6, speed=15, retransmission_radius=150):
         # Initial main parameters
+        self.speed = speed
+        self.n_drones = n_drones
+        self.retransmission_radius = retransmission_radius
+
         self.actions_history = None
         self.reward = None
         self.done = False
-        self.window = Environment(n_drones)
-        self.speed = speed
+        self.window = Environment(n_drones=self.n_drones, retransmission_radius=self.retransmission_radius)
         self.action_number = 0
 
         # possible reward changes
@@ -47,10 +47,10 @@ class Model(gym.Env):
 
         # Define action and observation space
         # They must be gym.spaces objects
-        self.action_space = spaces.MultiDiscrete([N_DISCRETE_ACTIONS] * N_DRONES)
+        self.action_space = spaces.MultiDiscrete([N_DISCRETE_ACTIONS] * n_drones)
         # Example for using image as input (channel-first; channel-last also works):
         self.observation_space = spaces.Box(low=-1, high=1280,
-                                            shape=(N_DRONES * 2 + HISTORY_LEN,),
+                                            shape=(n_drones * 2 + HISTORY_LEN,),
                                             dtype=np.int32)
 
     def step(self, actions):
@@ -70,7 +70,7 @@ class Model(gym.Env):
 
         # Change the drone position based on the action
         # and save it on rect and coordinates
-        for index in range(N_DRONES):
+        for index in range(self.n_drones):
             # 0 - up, 1 - down, 2 - left, 3 - right, 4 - stay
             if actions[index] == 0:
                 # go up
@@ -97,7 +97,7 @@ class Model(gym.Env):
                 self.window.drones_rect[index].move_ip(0, 0)
 
         # calculate overall reward
-        for index in range(N_DRONES):
+        for index in range(self.n_drones):
             drone_x = self.window.drones_rect[index].centerx
             drone_y = self.window.drones_rect[index].centery
 
@@ -135,8 +135,6 @@ class Model(gym.Env):
         Function move program to the start position
         :return: observation, info
         """
-        self.window.__init__(N_DRONES)
-
         # reset main parameters
         self.reward = 0
         self.action_number = 0

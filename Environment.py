@@ -10,7 +10,7 @@ class Environment:
     This class responsible for all events in the game
     """
 
-    def __init__(self, n_drones: int, retransmission_radius=150):
+    def __init__(self, n_drones=6, retransmission_radius=150):
         """
         initial all needed parameters.
         Main task is create list of drones coordinates [[x_1, y_1], [x_2, y_2], ... [x_n, y_n]]
