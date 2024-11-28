@@ -1,7 +1,8 @@
 # my ignored files
 .models
 models/
-
+.txt_files
+txt_files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

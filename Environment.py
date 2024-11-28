@@ -49,12 +49,15 @@ class Environment:
         self.drones_coordinates = list([self.drones_rect[i].centerx, self.drones_rect[i].centery]
                                        for i in self.drones_rect)
 
+        # load background image
+        self.background_map = pg.image.load("images/background_map_1.png")
+
     def draw_all(self):
         """
         drawing all objects
         """
 
-        self.window.fill(pg.Color('black'))
+        self.window.blit(self.background_map, (0, 0))
 
         # draw all drones and circle around they
         for index in range(self.n_drones):
