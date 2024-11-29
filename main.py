@@ -13,10 +13,6 @@ from MainWindow import UiMainWindow
 from Model import Model
 from SettingsWindow import UiSettingsWindow
 
-MODEL_SETTINGS = {'n_drones': 6,
-                  'speed': 15,
-                  'retransmission_radius': 150}
-
 
 def demonstration(env):
     load_model_path = './models/1_epoch.zip'
@@ -67,10 +63,8 @@ def open_main_window():
         SettingsWindow.show()
         MainWindow.close()
 
-        def start_demonstration_from_settings():
-            env = Model(n_drones=int(class_settings.lineEdit_n_drones.text()),
-                        speed=int(class_settings.lineEdit_drone_speed.text()),
-                        retransmission_radius=int(class_settings.lineEdit_retransmission_radius.text()))
+        def start_demonstration_from_settings(n_drones, speed, retransmission_radius, map_path):
+            env = Model(n_drones=n_drones, speed=speed, retransmission_radius=retransmission_radius, map_path=map_path)
             env.reset()
 
             demonstration(env)
@@ -82,12 +76,34 @@ def open_main_window():
             SettingsWindow.close()
             MainWindow.show()
 
+        def open_map():
+            class_settings.get_map_path()
+
         def back_to_main():
             SettingsWindow.close()
             open_main_window()
 
-        class_settings.button_start_demonstration.clicked.connect(start_demonstration_from_settings)
+        def check_values():
+            n_drones = class_settings.lineEdit_n_drones.text()
+            speed = class_settings.lineEdit_drone_speed.text()
+            retransmission_radius = class_settings.lineEdit_retransmission_radius.text()
+            map_path = class_settings.label_map_path.text()
+
+            if n_drones == '' or speed == '' or retransmission_radius == '' or map_path == '':
+                msg = QtWidgets.QMessageBox()
+                msg.setIcon(QtWidgets.QMessageBox.Critical)
+                msg.setText("Проверьте заполненность всех полей")
+                msg.setWindowTitle("ValueError")
+                msg.exec_()
+            else:
+                start_demonstration_from_settings(int(n_drones),
+                                                  int(speed),
+                                                  int(retransmission_radius),
+                                                  map_path)
+
+        class_settings.button_start_demonstration.clicked.connect(check_values)
         class_settings.button_back.clicked.connect(back_to_main)
+        class_settings.button_open_map.clicked.connect(open_map)
 
     class_main.button_start_demonstration.clicked.connect(start_demonstration_from_main)
     class_main.button_model_settings.clicked.connect(open_settings_window)

@@ -2,6 +2,8 @@
 Файл описывающий окружение для нейронной сети, он является хранилищем данных
 Никаких действий не выполняет, занимается рисованием объектов
 """
+import random
+
 import pygame as pg
 
 
@@ -10,7 +12,7 @@ class Environment:
     This class responsible for all events in the game
     """
 
-    def __init__(self, n_drones=6, retransmission_radius=150):
+    def __init__(self, n_drones=6, retransmission_radius=150, map_path='./images/background_map_1.png'):
         """
         initial all needed parameters.
         Main task is create list of drones coordinates [[x_1, y_1], [x_2, y_2], ... [x_n, y_n]]
@@ -50,7 +52,8 @@ class Environment:
                                        for i in self.drones_rect)
 
         # load background image
-        self.background_map = pg.image.load("images/background_map_1.png")
+        self.map_path = map_path
+        self.background_map = pg.image.load(self.map_path)
 
     def draw_all(self):
         """

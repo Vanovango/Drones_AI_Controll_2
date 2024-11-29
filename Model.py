@@ -22,16 +22,19 @@ class Model(gym.Env):
     """Custom Environment that follows gym interface."""
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, n_drones=6, speed=15, retransmission_radius=150):
+    def __init__(self, n_drones=6, speed=15, retransmission_radius=150, map_path='./images/background_map_1.png'):
         # Initial main parameters
         self.speed = speed
         self.n_drones = n_drones
         self.retransmission_radius = retransmission_radius
+        self.map_path = map_path
 
         self.actions_history = None
         self.reward = None
         self.done = False
-        self.window = Environment(n_drones=self.n_drones, retransmission_radius=self.retransmission_radius)
+        self.window = Environment(n_drones=self.n_drones,
+                                  retransmission_radius=self.retransmission_radius,
+                                  map_path=self.map_path)
         self.action_number = 0
 
         # possible reward changes
