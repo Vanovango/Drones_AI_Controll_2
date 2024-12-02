@@ -37,17 +37,6 @@ class Model(gym.Env):
                                   map_path=self.map_path)
         self.action_number = 0
 
-        # possible reward changes
-        self.change_reward = {
-            0: -5,
-            1: -3,
-            2: 3,
-            3: 5,
-            4: 7,
-            5: -5,
-            6: -5
-        }
-
         # Define action and observation space
         # They must be gym.spaces objects
         self.action_space = spaces.MultiDiscrete([N_DISCRETE_ACTIONS] * n_drones)
@@ -75,26 +64,31 @@ class Model(gym.Env):
         # and save it on rect and coordinates
         for index in range(self.n_drones):
             # 0 - up, 1 - down, 2 - left, 3 - right, 4 - stay
+            # up
             if actions[index] == 0:
                 # go up
                 self.window.drones_rect[index].move_ip(0, -self.speed)
                 self.window.drones_coordinates[index] = \
                     [self.window.drones_coordinates[index][0], self.window.drones_coordinates[index][1] - self.speed]
+            # down
             elif actions[index] == 1:
                 # go down
                 self.window.drones_rect[index].move_ip(0, +self.speed)
                 self.window.drones_coordinates[index] = \
                     [self.window.drones_coordinates[index][0], self.window.drones_coordinates[index][1] + self.speed]
+            # left
             elif actions[index] == 2:
                 # go left
                 self.window.drones_rect[index].move_ip(-self.speed, 0)
                 self.window.drones_coordinates[index] = \
                     [self.window.drones_coordinates[index][0] - self.speed, self.window.drones_coordinates[index][1]]
+            # right
             elif actions[index] == 3:
                 # go right
                 self.window.drones_rect[index].move_ip(+self.speed, 0)
                 self.window.drones_coordinates[index] = \
                     [self.window.drones_coordinates[index][0] + self.speed, self.window.drones_coordinates[index][1]]
+            # stay
             elif actions[index] == 4:
                 # nothing to do
                 self.window.drones_rect[index].move_ip(0, 0)
@@ -109,9 +103,15 @@ class Model(gym.Env):
                 distance = (abs(x - drone_x) ** 2 + abs(y - drone_y) ** 2) ** 0.5
                 if self.window.retransmission_radius - 50 <= distance <= self.window.retransmission_radius:
                     connections += 1
-            if connections == -1:
-                connections = 0
-            self.reward += self.change_reward[connections]
+                # outside the window
+                if x < 0 or x > 1280 or y < 0 or y > 720:
+                    self.reward -= 20
+            if connections in [4, 5, 6]:
+                self.reward += 5    # good result
+            elif connections in [3, 7]:
+                pass    # normal result
+            else:
+                self.reward -= 5    # bad result
 
         # tracks the end of an episode
         if self.action_number == TOTAL_ACTIONS:
@@ -161,6 +161,3 @@ class Model(gym.Env):
         info = {}
 
         return observation, info
-
-    # def close(self):
-    #     self.window.

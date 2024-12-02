@@ -20,7 +20,7 @@ class UiMainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 290, 581, 111))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 280, 581, 111))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -44,7 +44,7 @@ class UiMainWindow(object):
         self.button_start_demonstration.setAutoDefault(False)
         self.button_start_demonstration.setDefault(True)
         self.button_start_demonstration.setFlat(False)
-        self.button_start_demonstration.setObjectName("button_go_to_settings")
+        self.button_start_demonstration.setObjectName("button_start_demonstration")
         self.horizontalLayout.addWidget(self.button_start_demonstration)
         self.button_model_settings = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.button_model_settings.setEnabled(True)
@@ -65,7 +65,7 @@ class UiMainWindow(object):
         self.button_model_settings.setAutoDefault(False)
         self.button_model_settings.setDefault(True)
         self.button_model_settings.setFlat(False)
-        self.button_model_settings.setObjectName("button_start_demonstration")
+        self.button_model_settings.setObjectName("button_model_settings")
         self.horizontalLayout.addWidget(self.button_model_settings)
         self.label_main = QtWidgets.QLabel(self.centralwidget)
         self.label_main.setGeometry(QtCore.QRect(0, 20, 601, 171))
@@ -75,6 +75,12 @@ class UiMainWindow(object):
         self.label_main.setFont(font)
         self.label_main.setToolTipDuration(-1)
         self.label_main.setObjectName("label_main")
+        self.label_author = QtWidgets.QLabel(self.centralwidget)
+        self.label_author.setGeometry(QtCore.QRect(0, 380, 141, 16))
+        self.label_author.setObjectName("label_author")
+        self.label_version = QtWidgets.QLabel(self.centralwidget)
+        self.label_version.setGeometry(QtCore.QRect(560, 380, 41, 20))
+        self.label_version.setObjectName("label_version")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -84,8 +90,13 @@ class UiMainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.button_start_demonstration.setText(_translate("MainWindow", "начать\n"
-"демонстрацию"))
+                                                                         "демонстрацию"))
         self.button_model_settings.setText(_translate("MainWindow", "перейти к\n"
-"настройкам"))
-        self.label_main.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">Система</p><p align=\"center\">интеллектуального управления</p><p align=\"center\">роем БпЛА</p></body></html>"))
+                                                                    "настройкам"))
+        self.label_main.setText(_translate("MainWindow",
+                                           "<html><head/><body><p align=\"center\">Система</p><p align=\"center\">интеллектуального управления</p><p align=\"center\">роем БпЛА</p></body></html>"))
+        self.label_author.setText(_translate("MainWindow",
+                                             "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">Автор: Войтенко И. А.</span></p></body></html>"))
+        self.label_version.setText(_translate("MainWindow",
+                                              "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">v.2.6</span></p></body></html>"))
 

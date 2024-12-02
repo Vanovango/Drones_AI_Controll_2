@@ -84,6 +84,12 @@ def open_main_window():
             open_main_window()
 
         def check_values():
+            # check current construction
+            if class_settings.comboBox_cunstruction_type.currentText() == 'Максимальная площадь':
+                print('Максимальная площадь')
+            elif class_settings.comboBox_cunstruction_type.currentText() == 'Точка - точка':
+                print('Точка - точка')
+
             n_drones = class_settings.lineEdit_n_drones.text()
             speed = class_settings.lineEdit_drone_speed.text()
             retransmission_radius = class_settings.lineEdit_retransmission_radius.text()

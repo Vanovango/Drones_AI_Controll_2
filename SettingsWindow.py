@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class UiSettingsWindow(object):
     def setupUi(self, SettingsWindow):
         SettingsWindow.setObjectName("SettingsWindow")
-        SettingsWindow.resize(600, 600)
+        SettingsWindow.resize(600, 660)
         SettingsWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
         SettingsWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
         SettingsWindow.setTabShape(QtWidgets.QTabWidget.Triangular)
@@ -12,7 +12,7 @@ class UiSettingsWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.button_start_demonstration = QtWidgets.QPushButton(self.centralwidget)
         self.button_start_demonstration.setEnabled(True)
-        self.button_start_demonstration.setGeometry(QtCore.QRect(310, 500, 286, 75))
+        self.button_start_demonstration.setGeometry(QtCore.QRect(310, 560, 286, 75))
         font = QtGui.QFont()
         font.setFamily("Sitka Small")
         font.setPointSize(14)
@@ -33,7 +33,7 @@ class UiSettingsWindow(object):
         self.button_start_demonstration.setObjectName("button_start_demonstration")
         self.button_back = QtWidgets.QPushButton(self.centralwidget)
         self.button_back.setEnabled(True)
-        self.button_back.setGeometry(QtCore.QRect(10, 500, 286, 75))
+        self.button_back.setGeometry(QtCore.QRect(10, 560, 286, 75))
         font = QtGui.QFont()
         font.setFamily("Sitka Small")
         font.setPointSize(14)
@@ -59,7 +59,7 @@ class UiSettingsWindow(object):
         self.label_main.setFont(font)
         self.label_main.setObjectName("label_main")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(20, 250, 561, 71))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(20, 310, 561, 71))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -82,7 +82,7 @@ class UiSettingsWindow(object):
         self.lineEdit_drone_speed.setObjectName("lineEdit_drone_speed")
         self.horizontalLayout_2.addWidget(self.lineEdit_drone_speed)
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(20, 330, 561, 71))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(20, 390, 561, 71))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -104,7 +104,7 @@ class UiSettingsWindow(object):
         self.lineEdit_n_drones.setObjectName("lineEdit_n_drones")
         self.horizontalLayout_3.addWidget(self.lineEdit_n_drones)
         self.horizontalLayoutWidget_3 = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(20, 410, 561, 71))
+        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(20, 470, 561, 71))
         self.horizontalLayoutWidget_3.setObjectName("horizontalLayoutWidget_3")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_3)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -126,7 +126,7 @@ class UiSettingsWindow(object):
         self.lineEdit_retransmission_radius.setObjectName("lineEdit_retransmission_radius")
         self.horizontalLayout_4.addWidget(self.lineEdit_retransmission_radius)
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(20, 170, 561, 71))
+        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(20, 150, 561, 71))
         self.horizontalLayoutWidget_4.setObjectName("horizontalLayoutWidget_4")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_4)
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
@@ -146,16 +146,37 @@ class UiSettingsWindow(object):
         self.button_open_map.setObjectName("button_open_map")
         self.horizontalLayout_5.addWidget(self.button_open_map)
         self.label_author = QtWidgets.QLabel(self.centralwidget)
-        self.label_author.setGeometry(QtCore.QRect(0, 580, 141, 16))
+        self.label_author.setGeometry(QtCore.QRect(0, 640, 141, 16))
         self.label_author.setObjectName("label_author")
         self.label_version = QtWidgets.QLabel(self.centralwidget)
-        self.label_version.setGeometry(QtCore.QRect(560, 580, 41, 20))
+        self.label_version.setGeometry(QtCore.QRect(560, 640, 41, 20))
         self.label_version.setObjectName("label_version")
         self.label_map_path = QtWidgets.QLabel(self.centralwidget)
-        self.label_map_path.setGeometry(QtCore.QRect(20, 225, 561, 20))
+        self.label_map_path.setGeometry(QtCore.QRect(20, 200, 561, 20))
         self.label_map_path.setText("")
         self.label_map_path.setAlignment(QtCore.Qt.AlignCenter)
         self.label_map_path.setObjectName("label_map_path")
+        self.horizontalLayoutWidget_5 = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget_5.setGeometry(QtCore.QRect(20, 230, 561, 71))
+        self.horizontalLayoutWidget_5.setObjectName("horizontalLayoutWidget_5")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_5)
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.label_cunstruction_type = QtWidgets.QLabel(self.horizontalLayoutWidget_5)
+        font = QtGui.QFont()
+        font.setFamily("Sitka")
+        font.setPointSize(15)
+        self.label_cunstruction_type.setFont(font)
+        self.label_cunstruction_type.setObjectName("label_cunstruction_type")
+        self.horizontalLayout_6.addWidget(self.label_cunstruction_type)
+        self.comboBox_cunstruction_type = QtWidgets.QComboBox(self.horizontalLayoutWidget_5)
+        self.comboBox_cunstruction_type.addItems(['Максимальная площадь', 'Точка - точка'])     # possible constructions
+        font = QtGui.QFont()
+        font.setFamily("Sitka")
+        font.setPointSize(10)
+        self.comboBox_cunstruction_type.setFont(font)
+        self.comboBox_cunstruction_type.setObjectName("comboBox_cunstruction_type")
+        self.horizontalLayout_6.addWidget(self.comboBox_cunstruction_type)
         SettingsWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(SettingsWindow)
@@ -168,26 +189,22 @@ class UiSettingsWindow(object):
                                                                              "демонстрацию"))
         self.button_back.setText(_translate("SettingsWindow", "назад"))
         self.label_main.setText(_translate("SettingsWindow",
-                                           "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt;\""
-                                           ">Корректировка </span></p><p align=\"center\"><span style=\""
-                                           " font-size:20pt;\">основных параметров</span></p></body></html>"))
+                                           "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt;\">Корректировка </span></p><p align=\"center\"><span style=\" font-size:20pt;\">основных параметров</span></p></body></html>"))
         self.label_speed.setText(_translate("SettingsWindow", "Скорость дрона                    "))
         self.label_n_drones.setText(_translate("SettingsWindow", "Количество дронов             "))
         self.label_radius.setText(_translate("SettingsWindow", "Радиус ретранслятора        "))
         self.label_load_map.setText(_translate("SettingsWindow", "Загрузить карту                  "))
         self.button_open_map.setText(_translate("SettingsWindow", "Выбрать файл"))
         self.label_author.setText(_translate("SettingsWindow",
-                                             "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">"
-                                             "Автор: Войтенко И. А.</span></p></body></html>"))
+                                             "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">Автор: Войтенко И. А.</span></p></body></html>"))
         self.label_version.setText(_translate("SettingsWindow",
-                                              "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">"
-                                              "v.2.5</span></p></body></html>"))
+                                              "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">v.2.6</span></p></body></html>"))
+        self.label_cunstruction_type.setText(_translate("SettingsWindow", "Вид построения                   "))
 
     def get_map_path(self):
         file_path, _ = QtWidgets.QFileDialog.getOpenFileName(caption="Open File", filter="All Files (*)")
 
         if file_path:
-            from Environment import Environment
             self.button_open_map.setText("Файл выбран")
             self.label_map_path.setText(f'{file_path}')
 
@@ -196,6 +213,6 @@ class UiSettingsWindow(object):
             # font.setPointSize(15)
             # self.button_open_map.setFont(font)
         else:
-            self.button_open_map.setText("Файл не выбран")
+            self.button_open_map.setText("Файл НЕ выбран")
 
 
