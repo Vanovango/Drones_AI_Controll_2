@@ -169,14 +169,14 @@ class UiSettingsWindow(object):
         self.label_cunstruction_type.setFont(font)
         self.label_cunstruction_type.setObjectName("label_cunstruction_type")
         self.horizontalLayout_6.addWidget(self.label_cunstruction_type)
-        self.comboBox_cunstruction_type = QtWidgets.QComboBox(self.horizontalLayoutWidget_5)
-        self.comboBox_cunstruction_type.addItems(['Максимальная площадь', 'Точка - точка'])     # possible constructions
+        self.comboBox_construction_type = QtWidgets.QComboBox(self.horizontalLayoutWidget_5)
+        self.comboBox_construction_type.addItems(['Максимальная площадь', 'Точка - точка'])     # possible constructions
         font = QtGui.QFont()
         font.setFamily("Sitka")
         font.setPointSize(10)
-        self.comboBox_cunstruction_type.setFont(font)
-        self.comboBox_cunstruction_type.setObjectName("comboBox_cunstruction_type")
-        self.horizontalLayout_6.addWidget(self.comboBox_cunstruction_type)
+        self.comboBox_construction_type.setFont(font)
+        self.comboBox_construction_type.setObjectName("comboBox_cunstruction_type")
+        self.horizontalLayout_6.addWidget(self.comboBox_construction_type)
         SettingsWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(SettingsWindow)

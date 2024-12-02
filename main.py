@@ -14,8 +14,12 @@ from Model import Model
 from SettingsWindow import UiSettingsWindow
 
 
-def demonstration(env):
-    load_model_path = './models/1_epoch.zip'
+def demonstration(env, construction='Максимальная площадь'):
+    # chose model based on construction
+    if construction == 'Точка - точка':
+        load_model_path = './models/1_epoch.zip'
+    else:
+        load_model_path = './models/1_epoch.zip'
 
     model = A2C('MlpPolicy', env, verbose=1)
     model.load(path=load_model_path)
@@ -63,11 +67,11 @@ def open_main_window():
         SettingsWindow.show()
         MainWindow.close()
 
-        def start_demonstration_from_settings(n_drones, speed, retransmission_radius, map_path):
+        def start_demonstration_from_settings(n_drones, speed, retransmission_radius, map_path, construction):
             env = Model(n_drones=n_drones, speed=speed, retransmission_radius=retransmission_radius, map_path=map_path)
             env.reset()
 
-            demonstration(env)
+            demonstration(env, construction)
 
             # close Pygame window
             pg.quit()
@@ -84,16 +88,11 @@ def open_main_window():
             open_main_window()
 
         def check_values():
-            # check current construction
-            if class_settings.comboBox_cunstruction_type.currentText() == 'Максимальная площадь':
-                print('Максимальная площадь')
-            elif class_settings.comboBox_cunstruction_type.currentText() == 'Точка - точка':
-                print('Точка - точка')
-
             n_drones = class_settings.lineEdit_n_drones.text()
             speed = class_settings.lineEdit_drone_speed.text()
             retransmission_radius = class_settings.lineEdit_retransmission_radius.text()
             map_path = class_settings.label_map_path.text()
+            construction = class_settings.comboBox_construction_type.currentText()
 
             if n_drones == '' or speed == '' or retransmission_radius == '' or map_path == '':
                 msg = QtWidgets.QMessageBox()
@@ -105,7 +104,8 @@ def open_main_window():
                 start_demonstration_from_settings(int(n_drones),
                                                   int(speed),
                                                   int(retransmission_radius),
-                                                  map_path)
+                                                  map_path,
+                                                  construction)
 
         class_settings.button_start_demonstration.clicked.connect(check_values)
         class_settings.button_back.clicked.connect(back_to_main)

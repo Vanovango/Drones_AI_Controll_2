@@ -55,6 +55,9 @@ class Environment:
         self.map_path = map_path
         self.background_map = pg.image.load(self.map_path)
 
+        # points
+        self.points = []
+
     def draw_all(self):
         """
         drawing all objects
@@ -67,5 +70,13 @@ class Environment:
             self.window.blit(self.all_drones[index], self.drones_rect[index])
             pg.draw.circle(self.window, pg.Color('blue'), self.drones_rect[index].center, self.retransmission_radius, 2)
 
+        if len(self.points) > 0:
+            for point in self.points:
+                self.window.blit(point['object'], point['coordinates'])
+
         pg.display.update()
         self.clock.tick(self.FPS)
+
+    def init_points_location(self):
+        self.points = [pg.image.load('./images/point.png')]
+
