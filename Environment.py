@@ -2,9 +2,11 @@
 Файл описывающий окружение для нейронной сети, он является хранилищем данных
 Никаких действий не выполняет, занимается рисованием объектов
 """
-import random
 
 import pygame as pg
+from PIL import Image
+
+pg.init()   # now use display and fonts
 
 
 class Environment:
@@ -12,7 +14,8 @@ class Environment:
     This class responsible for all events in the game
     """
 
-    def __init__(self, n_drones=6, retransmission_radius=150, map_path='./images/background_map_1.png'):
+    def __init__(self, n_drones=6, retransmission_radius=150,
+                 map_path='./images/map_1.png', construction='Максимальная площадь'):
         """
         initial all needed parameters.
         Main task is create list of drones coordinates [[x_1, y_1], [x_2, y_2], ... [x_n, y_n]]
@@ -52,11 +55,20 @@ class Environment:
                                        for i in self.drones_rect)
 
         # load background image
-        self.map_path = map_path
-        self.background_map = pg.image.load(self.map_path)
+        self.background_map = pg.image.load(map_path)
 
         # points
-        self.points = []
+        self.font = pg.font.Font(None, 36)
+        self.construction = construction
+        self.point_object = pg.image.load('./images/point.png')
+        self.points = []  # [{'object': ..., 'coordinates': (x, y)}, {...}]
+
+        # colors
+        self.colors = {'red': (255, 0, 0),
+                       'green': (0, 255, 0),
+                       'blue': (0, 0, 255),
+                       'black': (0, 0, 0),
+                       'white': (255, 255, 255)}
 
     def draw_all(self):
         """
@@ -64,6 +76,38 @@ class Environment:
         """
 
         self.window.blit(self.background_map, (0, 0))
+
+        # if drones construction is 'Точка - точка'
+        if self.construction == 'Точка - точка':
+            """
+            this part of the code is responsible for drawing points on the map
+            """
+            # draw current text
+            if len(self.construction) < 2:
+                text = self.font.render(f"Осталось точек - {2 - len(self.construction)}", True, self.colors['black'])
+                self.window.blit(text, (0, 0))
+            else:
+                # if 2 points on map, change text and draw the line
+                text = self.font.render(f"Точки нанесены", True, self.colors['red'])
+                self.window.blit(text, (0, 0))
+                # draw the connection line
+                pg.draw.line(self.window, self.colors['blue'],
+                             (self.points[0]['coordinates'][0] + 13, self.points[0]['coordinates'][1] + 26),
+                             (self.points[1]['coordinates'][0] + 13, self.points[1]['coordinates'][1] + 26),
+                             1)
+
+            # draw the dots if they exist
+            if len(self.construction) > 0:
+                for point in self.points:
+                    self.window.blit(point['object'], point['coordinates'])
+
+            # check events
+            for event in pg.event.get():
+                # Если нажата кнопка мыши и точек меньше чем 2
+                if event.type == pg.MOUSEBUTTONDOWN and len(self.points) < 2:
+                    x, y = pg.mouse.get_pos()  # Получение координат нажатия
+                    self.points.append({'object': self.point_object,
+                                        'coordinates': (x - 13, y - 26)})
 
         # draw all drones and circle around they
         for index in range(self.n_drones):
@@ -76,7 +120,3 @@ class Environment:
 
         pg.display.update()
         self.clock.tick(self.FPS)
-
-    def init_points_location(self):
-        self.points = [pg.image.load('./images/point.png')]
-

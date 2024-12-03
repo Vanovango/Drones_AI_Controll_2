@@ -14,9 +14,9 @@ from Model import Model
 from SettingsWindow import UiSettingsWindow
 
 
-def demonstration(env, construction='Максимальная площадь'):
+def demonstration(env):
     # chose model based on construction
-    if construction == 'Точка - точка':
+    if env.construction == 'Точка - точка':
         load_model_path = './models/1_epoch.zip'
     else:
         load_model_path = './models/1_epoch.zip'
