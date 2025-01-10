@@ -14,9 +14,9 @@ from Model import Model
 from SettingsWindow import UiSettingsWindow
 
 
-def demonstration(env):
+def demonstration(env, construction='Максимальная площадь'):
     # chose model based on construction
-    if env.construction == 'Точка - точка':
+    if construction == 'Точка - точка':
         load_model_path = './models/1_epoch.zip'
     else:
         load_model_path = './models/1_epoch.zip'
@@ -68,7 +68,8 @@ def open_main_window():
         MainWindow.close()
 
         def start_demonstration_from_settings(n_drones, speed, retransmission_radius, map_path, construction):
-            env = Model(n_drones=n_drones, speed=speed, retransmission_radius=retransmission_radius, map_path=map_path)
+            env = Model(n_drones=n_drones, speed=speed, retransmission_radius=retransmission_radius,
+                        map_path=map_path, construction=construction)
             env.reset()
 
             demonstration(env, construction)

@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 # Создание объекта
 point = pygame.image.load("C:/Code/pythonProjects/Drones_AI_Controll_2/images/point.png")
 line_color = (255, 0, 0)
-font = pygame.font.Font(None, 36)
+font = pygame.font.SysFont('arial', 36)
 counter = 0
 
 points = []
