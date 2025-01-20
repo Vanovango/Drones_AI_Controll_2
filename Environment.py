@@ -121,6 +121,9 @@ class Environment:
                          (self.points[0]['coordinates'][0] + 13, self.points[0]['coordinates'][1] + 26),
                          (self.points[1]['coordinates'][0] + 13, self.points[1]['coordinates'][1] + 26),
                          1)
+        # draw help text for stop drones
+        stop_help = self.font.render(f"Пауза - 'space'", True, self.colors['black'])
+        self.window.blit(stop_help, (1100, 680))
 
         pg.display.update()
         self.clock.tick(self.FPS)

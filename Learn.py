@@ -21,10 +21,10 @@ if __name__ == "__main__":
 
     model = A2C('MlpPolicy', env, verbose=1)
 
-    steps_to_save = 10000
+    steps_to_save = 100000
     iters = 0
     while True:
         iters += 1
         start = time()
         model.learn(total_timesteps=steps_to_save)
-        model.save(f"{save_path}/{iters}_epoch")
+        model.save(f"{save_path}/{iters}_epoch_2")

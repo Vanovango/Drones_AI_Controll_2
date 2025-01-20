@@ -198,7 +198,7 @@ class UiSettingsWindow(object):
         self.label_author.setText(_translate("SettingsWindow",
                                              "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">Автор: Войтенко И. А.</span></p></body></html>"))
         self.label_version.setText(_translate("SettingsWindow",
-                                              "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">v.2.6</span></p></body></html>"))
+                                              "<html><head/><body><p align=\"center\"><span style=\" color:#bcbcbc;\">v.2.7</span></p></body></html>"))
         self.label_cunstruction_type.setText(_translate("SettingsWindow", "Вид построения                   "))
 
     def get_map_path(self):

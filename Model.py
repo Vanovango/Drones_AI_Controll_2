@@ -13,16 +13,16 @@ from gymnasium import spaces
 
 from Environment import Environment
 
-TOTAL_ACTIONS = 30
+TOTAL_ACTIONS = 100
 N_DISCRETE_ACTIONS = 5
-HISTORY_LEN = 30 * N_DISCRETE_ACTIONS
+HISTORY_LEN = TOTAL_ACTIONS * N_DISCRETE_ACTIONS
 
 
 class Model(gym.Env):
     """Custom Environment that follows gym interface."""
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, n_drones=6, speed=15, retransmission_radius=150,
+    def __init__(self, n_drones=8, speed=10, retransmission_radius=150,
                  map_path='./images/map_1.png', construction='Максимальная площадь'):
         # Initial main parameters
         self.speed = speed
@@ -51,11 +51,13 @@ class Model(gym.Env):
     def step(self, actions):
         self.actions_history += list(action for action in actions)  # add action to history (0, 1, 2, 3, 5)
         self.action_number += 1
-        self.window.draw_all()  # draw objects on window (vizual learning proces)
+
+        # draw objects on window (vizual learning proces)
+        self.window.draw_all()
 
         # Takes step after fixed time
         # need to vizual
-        t_end = time.time() + 0.05
+        t_end = time.time() + 0.025
         k = -1
         while time.time() < t_end:
             if k == -1:
@@ -109,9 +111,9 @@ class Model(gym.Env):
                 # outside the window
                 if x < 0 or x > 1280 or y < 0 or y > 720:
                     self.reward -= 20
-            if connections in [4, 5, 6]:
+            if connections in [3, 4]:
                 self.reward += 5    # good result
-            elif connections in [3, 7]:
+            elif connections in [2, 5]:
                 pass    # normal result
             else:
                 self.reward -= 5    # bad result

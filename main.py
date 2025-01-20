@@ -4,6 +4,7 @@
 
 """
 import sys
+import time
 
 import pygame as pg
 from PyQt5 import QtWidgets
@@ -14,12 +15,24 @@ from Model import Model
 from SettingsWindow import UiSettingsWindow
 
 
+def pause():
+    while True:
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    return False
+                elif event.key == pg.K_ESCAPE:
+                    return True
+            elif event.type == pg.QUIT:
+                return True
+
+
 def demonstration(env, construction='Максимальная площадь'):
     # chose model based on construction
     if construction == 'Точка - точка':
         load_model_path = './models/1_epoch.zip'
     else:
-        load_model_path = './models/1_epoch.zip'
+        load_model_path = './models/max_area_model.zip'
 
     model = A2C('MlpPolicy', env, verbose=1)
     model.load(path=load_model_path)
@@ -33,9 +46,13 @@ def demonstration(env, construction='Максимальная площадь'):
         for event in pg.event.get():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
-                    done = True
+                    done = True                 # close demonstration window
+
+                elif event.key == pg.K_SPACE:
+                    done = pause()              # pause the demonstration
+
             elif event.type == pg.QUIT:
-                done = True
+                done = True                     # close demonstration window
 
 
 def open_main_window():
