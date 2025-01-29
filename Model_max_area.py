@@ -18,7 +18,7 @@ N_DISCRETE_ACTIONS = 5
 HISTORY_LEN = TOTAL_ACTIONS * N_DISCRETE_ACTIONS
 
 
-class Model(gym.Env):
+class ModelMaxArea(gym.Env):
     """Custom Environment that follows gym interface."""
     metadata = {"render_modes": ["human"]}
 

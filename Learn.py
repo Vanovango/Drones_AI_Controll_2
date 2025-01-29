@@ -5,7 +5,8 @@
 import os
 from stable_baselines3 import A2C
 
-from Model import Model
+from Model_max_area import ModelMaxArea
+from ModelPtP import ModelPtP
 
 from time import time
 
@@ -16,7 +17,9 @@ if __name__ == "__main__":
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    env = Model()
+    # educate one of two possible models
+    env = ModelMaxArea()
+    # env = ModelPtP()
     env.reset()
 
     model = A2C('MlpPolicy', env, verbose=1)

@@ -11,7 +11,7 @@ from PyQt5 import QtWidgets
 from stable_baselines3 import A2C
 
 from MainWindow import UiMainWindow
-from Model import Model
+from Model_max_area import ModelMaxArea
 from SettingsWindow import UiSettingsWindow
 
 
@@ -64,7 +64,7 @@ def open_main_window():
     MainWindow.show()
 
     def start_demonstration_from_main():
-        env = Model()
+        env = ModelMaxArea()
         env.reset()
 
         demonstration(env)
@@ -85,8 +85,8 @@ def open_main_window():
         MainWindow.close()
 
         def start_demonstration_from_settings(n_drones, speed, retransmission_radius, map_path, construction):
-            env = Model(n_drones=n_drones, speed=speed, retransmission_radius=retransmission_radius,
-                        map_path=map_path, construction=construction)
+            env = ModelMaxArea(n_drones=n_drones, speed=speed, retransmission_radius=retransmission_radius,
+                               map_path=map_path, construction=construction)
             env.reset()
 
             demonstration(env, construction)

@@ -5,7 +5,7 @@
 Load model and test it
 """
 from stable_baselines3 import A2C
-from Model import Model
+from Model_max_area import ModelMaxArea
 import sys
 from MainWindow import UiMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -27,7 +27,7 @@ def open_main_window():
 def start_demonstration():
     load_model_path = 'C:/Code/pythonProjects/Drones_AI_Controll_2/models/1_epoch.zip'
 
-    env = Model()
+    env = ModelMaxArea()
     env.reset()
 
     model = A2C('MlpPolicy', env, verbose=1)
