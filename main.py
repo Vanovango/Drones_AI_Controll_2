@@ -11,7 +11,7 @@ from PyQt5 import QtWidgets
 from stable_baselines3 import A2C
 
 from MainWindow import UiMainWindow
-from Model_max_area import ModelMaxArea
+from ModelMaxArea import ModelMaxArea
 from SettingsWindow import UiSettingsWindow
 
 

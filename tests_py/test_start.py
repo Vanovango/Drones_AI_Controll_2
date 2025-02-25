@@ -5,7 +5,7 @@
 Load model and test it
 """
 from stable_baselines3 import A2C
-from Model_max_area import ModelMaxArea
+from ModelMaxArea import ModelMaxArea
 import sys
 from MainWindow import UiMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets

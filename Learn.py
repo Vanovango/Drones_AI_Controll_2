@@ -5,7 +5,7 @@
 import os
 from stable_baselines3 import A2C
 
-from Model_max_area import ModelMaxArea
+from ModelMaxArea import ModelMaxArea
 from ModelPtP import ModelPtP
 
 from time import time
