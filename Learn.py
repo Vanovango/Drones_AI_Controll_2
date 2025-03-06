@@ -20,14 +20,18 @@ if __name__ == "__main__":
     # educate one of two possible models
     env = ModelMaxArea()
     # env = ModelPtP()
+
     env.reset()
 
     model = A2C('MlpPolicy', env, verbose=1)
 
-    steps_to_save = 100000
+    total_timesteps = 500
+    log_interval = 100
     iters = 0
+
     while True:
         iters += 1
         start = time()
-        model.learn(total_timesteps=steps_to_save)
-        model.save(f"{save_path}/{iters}_epoch_2")
+        model.learn(total_timesteps=total_timesteps, log_interval=log_interval)
+        model.save(f"{save_path}/{iters}_1v")
+        print(f'Epoch {iters} is Saved!!!')

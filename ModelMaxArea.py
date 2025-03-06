@@ -133,7 +133,7 @@ class ModelMaxArea(gym.Env):
         observation = np.array(observation)
 
         terminated = self.done
-        truncated = False
+        truncated = self.done
         info = {}
 
         return observation, self.reward, terminated, truncated, info
