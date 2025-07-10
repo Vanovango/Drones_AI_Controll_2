@@ -30,9 +30,9 @@ def pause():
 def demonstration(env, construction='Максимальная площадь'):
     # chose model based on construction
     if construction == 'Точка - точка':
-        load_model_path = './models/1_epoch.zip'
+        load_model_path = './models/test_model.zip'
     else:
-        load_model_path = './models/max_area_model.zip'
+        load_model_path = './models/test_model.zip'
 
     model = A2C('MlpPolicy', env, verbose=1)
     model.load(path=load_model_path)
