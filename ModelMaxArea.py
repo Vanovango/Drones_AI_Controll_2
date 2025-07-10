@@ -13,7 +13,7 @@ from gymnasium import spaces
 
 from Environment import Environment
 
-TOTAL_ACTIONS = 100
+TOTAL_ACTIONS = 250
 N_DISCRETE_ACTIONS = 5
 HISTORY_LEN = TOTAL_ACTIONS * N_DISCRETE_ACTIONS
 
@@ -147,6 +147,11 @@ class ModelMaxArea(gym.Env):
         self.reward = 0
         self.action_number = 0
         self.done = False
+
+        self.window = Environment(n_drones=self.n_drones,
+                                  retransmission_radius=self.retransmission_radius,
+                                  map_path=self.map_path,
+                                  construction=self.construction)
 
         # however long we aspire the drone to be
         self.actions_history = deque(maxlen=HISTORY_LEN)
