@@ -1,6 +1,8 @@
 # my ignored files
 .models
 models/
+.best_model
+best_model/
 .txt_files
 txt_files/
 

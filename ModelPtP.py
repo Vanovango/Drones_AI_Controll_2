@@ -41,10 +41,9 @@ class ModelPtP(gym.Env):
         
         
         # get coordinates of points to calculate the reward
-        if self.construction == 'Точка - точка':
-            self.points_coordinates = {i+1: [self.window.points[i]['coordinates'][0]+13, 
-                                             self.window.points[i]['coordinates'][1]+26] for i in range(2)}
-            # --> {1: [x1 + 13, y1 + 26], 2: [x2 + 13, y2 + 26]}
+        self.points_coordinates = {i+1: [self.window.points[i]['coordinates'][0]+13, 
+                                        self.window.points[i]['coordinates'][1]+26] for i in range(2)}
+        # --> {1: [x1 + 13, y1 + 26], 2: [x2 + 13, y2 + 26]}
 
 
         self.action_number = 0
@@ -125,11 +124,11 @@ class ModelPtP(gym.Env):
                 # use line equation to two points
                 x_equation = (x - self.points_coordinates[1][0]) / (self.points_coordinates[2][0] - self.points_coordinates[1][0])
                 y_equation = (x - self.points_coordinates[1][1]) / (self.points_coordinates[2][1] - self.points_coordinates[1][1])
-                k = abs(x_equation**2 - y_equation**2)**0.5
+                koef_distance_to_line = abs(x_equation**2 - y_equation**2)**0.5
                 # change reward based on distance to line
-                if 0 < k < 30:
+                if 0 < koef_distance_to_line < 30:
                     self.reward += 5
-                elif 30 < k < 50:
+                elif 30 < koef_distance_to_line < 50:
                     pass
                 else:
                     self.reward -= 5
