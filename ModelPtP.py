@@ -38,6 +38,15 @@ class ModelPtP(gym.Env):
                                   retransmission_radius=self.retransmission_radius,
                                   map_path=self.map_path,
                                   construction=self.construction)
+        
+        
+        # get coordinates of points to calculate the reward
+        if self.construction == 'Точка - точка':
+            self.points_coordinates = {i+1: [self.window.points[i]['coordinates'][0]+13, 
+                                             self.window.points[i]['coordinates'][1]+26] for i in range(2)}
+            # --> {1: [x1 + 13, y1 + 26], 2: [x2 + 13, y2 + 26]}
+
+
         self.action_number = 0
 
         # Define action and observation space
@@ -98,6 +107,7 @@ class ModelPtP(gym.Env):
                 # nothing to do
                 self.window.drones_rect[index].move_ip(0, 0)
 
+        
         # calculate overall reward
         for index in range(self.n_drones):
             drone_x = self.window.drones_rect[index].centerx
@@ -105,9 +115,25 @@ class ModelPtP(gym.Env):
 
             connections = -1    # because this variable calculate himself at once
             for x, y in self.window.drones_coordinates:
+
+                # calculate connections with other drones
                 distance = (abs(x - drone_x) ** 2 + abs(y - drone_y) ** 2) ** 0.5
                 if self.window.retransmission_radius - 50 <= distance <= self.window.retransmission_radius:
                     connections += 1
+
+                # calculate distance between drones and line
+                # use line equation to two points
+                x_equation = (x - self.points_coordinates[1][0]) / (self.points_coordinates[2][0] - self.points_coordinates[1][0])
+                y_equation = (x - self.points_coordinates[1][1]) / (self.points_coordinates[2][1] - self.points_coordinates[1][1])
+                k = abs(x_equation**2 - y_equation**2)**0.5
+                # change reward based on distance to line
+                if 0 < k < 30:
+                    self.reward += 5
+                elif 30 < k < 50:
+                    pass
+                else:
+                    self.reward -= 5
+
                 # outside the window
                 if x < 0 or x > 1280 or y < 0 or y > 720:
                     self.reward -= 20
@@ -148,6 +174,11 @@ class ModelPtP(gym.Env):
         self.action_number = 0
         self.done = False
 
+        self.window = Environment(n_drones=self.n_drones,
+                                  retransmission_radius=self.retransmission_radius,
+                                  map_path=self.map_path,
+                                  construction=self.construction)
+
         # however long we aspire the drone to be
         self.actions_history = deque(maxlen=HISTORY_LEN)
         for i in range(HISTORY_LEN):
@@ -166,3 +197,4 @@ class ModelPtP(gym.Env):
         info = {}
 
         return observation, info
+    

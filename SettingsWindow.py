@@ -208,10 +208,6 @@ class UiSettingsWindow(object):
             self.button_open_map.setText("Файл выбран")
             self.label_map_path.setText(f'{file_path}')
 
-            # font = QtGui.QFont()
-            # font.setFamily("Sitka")
-            # font.setPointSize(15)
-            # self.button_open_map.setFont(font)
         else:
             self.button_open_map.setText("Файл НЕ выбран")
 
