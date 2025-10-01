@@ -117,7 +117,7 @@ class Environment:
             text = self.font.render(f"Точки нанесены", True, self.colors['red'])
             self.window.blit(text, (10, 10))
             # draw the connection line
-            print(*self.points)
+            # print(*self.points) test print for check points coordinates
             pg.draw.line(self.window, self.colors['red'],
                          (self.points[0]['coordinates'][0] + 13, self.points[0]['coordinates'][1] + 26),
                          (self.points[1]['coordinates'][0] + 13, self.points[1]['coordinates'][1] + 26),

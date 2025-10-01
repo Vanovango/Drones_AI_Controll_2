@@ -53,7 +53,7 @@ class ModelMaxArea(gym.Env):
         self.action_number += 1
 
         # draw objects on window (vizual learning proces)
-        # self.window.draw_all()
+        self.window.draw_all()
 
         # Takes step after fixed time
         # need to vizual
